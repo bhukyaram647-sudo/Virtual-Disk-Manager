@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { db } from "@/firebase/config";
+import { db, isFirebaseConfigured } from "@/firebase/config";
 import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { BarChart3, Clock, HardDrive } from "lucide-react";
@@ -24,7 +24,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) { setLoading(false); return; }
+    if (!user || !db) { setLoading(false); return; }
     const fetchSims = async () => {
       try {
         const q = query(
