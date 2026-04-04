@@ -24,7 +24,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) { setLoading(false); return; }
+    if (!user || !db) { setLoading(false); return; }
     const fetchSims = async () => {
       try {
         const q = query(
